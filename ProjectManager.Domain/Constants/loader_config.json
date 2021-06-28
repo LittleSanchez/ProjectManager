@@ -1,0 +1,16 @@
+{
+  "ProjectTypes": [
+    "React"
+  ],
+  "AvailableExtentions": [
+    ".js",
+    ".ts",
+    ".jsx",
+    ".tsx",
+    ".json"
+  ],
+  "IgnoredNames": [
+    "node_modules",
+    "(\\..+)"
+  ]
+}
