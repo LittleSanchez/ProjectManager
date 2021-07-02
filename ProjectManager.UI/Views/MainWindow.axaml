@@ -43,10 +43,15 @@
             <ListBox Items="{Binding Files, Mode=OneWay}">
               <ListBox.ItemTemplate>
                 <DataTemplate>
-                  <StackPanel>
-                    <TextBlock Text="{Binding ComponentName, Mode=OneWay}"/>
-                    <TextBlock Classes="small" Text="{Binding FilePath}"/>
-                  </StackPanel>
+                  <DockPanel>
+                    <CheckBox>
+
+                    </CheckBox>
+                    <StackPanel>
+                      <TextBlock Text="{Binding ComponentName, Mode=OneWay}"/>
+                      <TextBlock Classes="small" Text="{Binding FilePath}"/>
+                    </StackPanel>
+                  </DockPanel>
                 </DataTemplate>
               </ListBox.ItemTemplate>
             </ListBox>

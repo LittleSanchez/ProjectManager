@@ -16,7 +16,7 @@ export const reducers = {
 
     //counter: Counter.reducer,
     //weatherForecasts: WeatherForecasts.reducer
-    authStore: AuthStore.reducer
+    //authStore: AuthStore.reducer
 };
 
 // This type can be used as a hint on action creators so that its 'dispatch' and 'getState' params are

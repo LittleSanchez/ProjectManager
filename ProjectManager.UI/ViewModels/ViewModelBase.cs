@@ -7,5 +7,6 @@ namespace ProjectManager.UI.ViewModels
 {
     public class ViewModelBase : ReactiveObject
     {
+
     }
 }
