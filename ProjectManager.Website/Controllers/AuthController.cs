@@ -19,13 +19,13 @@ namespace ProjectManager.Website.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserViewModel>> Login(LoginQuery query)
         {
-            return Ok(Mediator.Send(query));
+            return Ok(await Mediator.Send(query));
         }
 
         [HttpPost("register")]
         public async Task<ActionResult<UserViewModel>> Register(RegistrationCommand command)
         {
-            return Ok(Mediator.Send(command));
+            return Ok(await Mediator.Send(command));
         }
 
 

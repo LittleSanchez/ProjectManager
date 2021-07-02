@@ -63,6 +63,16 @@ namespace ProjectManager.Website
                 configuration.RootPath = "ClientApp/build";
             });
 
+            
+            services.AddTransient<IValidator<LoginQuery>, LoginQueryValidator>();
+            services.AddTransient<IValidator<RegistrationCommand>, RegistrationValidation>();
+
+            services.TryAddSingleton<ISystemClock, SystemClock>();
+
+            services.AddIdentity<AppUser, AppRole>(options => options.Stores.MaxLengthForKeys = 128)
+                .AddEntityFrameworkStores<DataContext>()
+                .AddDefaultTokenProviders();
+
             services.AddMvc(option =>
             {
                 option.EnableEndpointRouting = false;
@@ -73,14 +83,6 @@ namespace ProjectManager.Website
             }).SetCompatibilityVersion(CompatibilityVersion.Latest)
                 .AddFluentValidation();
 
-            services.AddTransient<IValidator<LoginQuery>, LoginQueryValidator>();
-            services.AddTransient<IValidator<RegistrationCommand>, RegistrationValidation>();
-
-            services.TryAddSingleton<ISystemClock, SystemClock>();
-
-            services.AddIdentity<AppUser, AppRole>(options => options.Stores.MaxLengthForKeys = 128)
-                .AddEntityFrameworkStores<DataContext>()
-                .AddDefaultTokenProviders();
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"]));
             services.AddAuthentication(options =>

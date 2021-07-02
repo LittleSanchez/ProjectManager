@@ -12,6 +12,9 @@ namespace ProjectManager.EFData
                     AppUserRole, IdentityUserLogin<long>,
                     IdentityRoleClaim<long>, IdentityUserToken<long>>
     {
+
+     
+
         public DataContext(DbContextOptions<DataContext> options)
             : base(options)
         {
