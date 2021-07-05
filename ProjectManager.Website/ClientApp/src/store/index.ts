@@ -1,3 +1,4 @@
+import { RouterState } from 'connected-react-router';
 import * as AuthStore from './authStore';
 
 
@@ -6,7 +7,8 @@ export interface ApplicationState {
 
     //counter: Counter.CounterState | undefined;
     //weatherForecasts: WeatherForecasts.WeatherForecastsState | undefined;
-    authState: AuthStore.AuthState | undefined
+    auth: AuthStore.AuthState | undefined,
+    router: RouterState | undefined
 }
 
 // Whenever an action is dispatched, Redux will update each top-level application state property using
@@ -16,7 +18,8 @@ export const reducers = {
 
     //counter: Counter.reducer,
     //weatherForecasts: WeatherForecasts.reducer
-    //authStore: AuthStore.reducer
+    auth: AuthStore.reducer,
+
 };
 
 // This type can be used as a hint on action creators so that its 'dispatch' and 'getState' params are

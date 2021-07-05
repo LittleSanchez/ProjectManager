@@ -49,6 +49,8 @@
     <None Remove="ClientApp\src\components\About.tsx" />
     <None Remove="ClientApp\src\components\Auth\Login.tsx" />
     <None Remove="ClientApp\src\components\Auth\Registration.tsx" />
+    <None Remove="ClientApp\src\components\templates\EmptyLayout.tsx" />
+    <None Remove="ClientApp\src\components\templates\index.tsx" />
     <None Remove="ClientApp\src\store\authStore.ts" />
   </ItemGroup>
 
@@ -62,6 +64,8 @@
     <TypeScriptCompile Include="ClientApp\src\components\About.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\Auth\Login.tsx" />
     <TypeScriptCompile Include="ClientApp\src\components\Auth\Registration.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\templates\EmptyLayout.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\templates\index.tsx" />
     <TypeScriptCompile Include="ClientApp\src\store\authStore.ts" />
   </ItemGroup>
 

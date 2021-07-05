@@ -1,15 +1,36 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.reducer = exports.actionCreators = void 0;
 //----------------------
 // ACTION CREATORS
 exports.actionCreators = {
     requestLogin: function (loginData) { return function (dispatch, getState) {
+        console.log("Auth state request login");
+        console.log(loginData);
         var appState = getState();
-        if (appState && appState.authState && appState.authState.loggedIn === false) {
-            fetch("api/auth/login")
+        if (appState.auth.loggedIn === false) {
+            console.log(appState);
+            fetch("api/auth/login", {
+                method: 'POST',
+                body: JSON.stringify(loginData),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
                 .then(function (response) { return response.json(); })
                 .then(function (data) {
+                console.log(data);
                 dispatch({ type: 'RECEIVE_PROFILE_ACTION', data: data });
             });
             dispatch({ type: 'REQUEST_LOGIN_ACTION', data: loginData });
@@ -17,8 +38,14 @@ exports.actionCreators = {
     }; },
     requestRegistration: function (registerData) { return function (dispatch, getState) {
         var appState = getState();
-        if (appState && appState.authState && appState.authState.loggedIn === false) {
-            fetch("api/auth/register")
+        if (appState && appState.auth && appState.auth.loggedIn === false) {
+            fetch("api/auth/register", {
+                method: 'POST',
+                body: JSON.stringify(registerData),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
                 .then(function (response) { return response.json(); })
                 .then(function (data) {
                 dispatch({ type: 'RECEIVE_PROFILE_ACTION', data: data });
@@ -51,15 +78,16 @@ var reducer = function (state, incomingAction) {
         case 'RECEIVE_PROFILE_ACTION':
             // Only accept the incoming data if it matches the most recent request. This ensures we correctly
             // handle out-of-order responses.
-            if (state.loggedIn)
-                return {
-                    loggedIn: true,
-                    profile: action.data,
-                    isLoading: false
-                };
-            break;
+            return {
+                loggedIn: true,
+                profile: action.data,
+                isLoading: false
+            };
+        case 'LOG_OUT_ACTION':
+            return __assign(__assign({}, state), { loggedIn: false, profile: undefined });
+        default:
+            return state;
     }
-    return state;
 };
 exports.reducer = reducer;
 //# sourceMappingURL=authStore.js.map

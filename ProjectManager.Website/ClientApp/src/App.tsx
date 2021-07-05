@@ -1,18 +1,36 @@
 import * as React from 'react';
-import { Route } from 'react-router';
-import Layout from './components/Layout';
+import { Route, Switch } from 'react-router';
+import { NavLayout, EmptyLayout } from './components/templates';
+import NotFound from './components/NotFound';
 import Home from './components/Home';
 import About from './components/About';
-
-import './custom.css'
 import Login from './components/Auth/Login';
 
+import './custom.css'
+import Registration from './components/Auth/Registration';
+
 export default () => (
-    <Layout>
-        <Route exact path='/' component={Home} />
-        <Route exact path='/about' component={About} />
-        <Route exact path='/auth/login' component={Login}/>
+    <React.Fragment>
+        <Switch>
+            <Switch>
+                <Route path='/auth'>
+                    <EmptyLayout>
+                        <Route exact path='/auth/login' component={Login} />
+                        <Route exact path='/auth/registration' component={Registration} />
+                    </EmptyLayout>
+                </Route>
+                <Route path='/'>
+                    <NavLayout>
+                        <Switch>
+                            <Route exact path='/' component={Home} />
+                            <Route exact path='/about' component={About} />
+                        </Switch>
+                    </NavLayout>
+                </Route>
+            </Switch>
+            <Route component={NotFound} />
+        </Switch>
         {/*<Route path='/counter' component={Counter} />*/}
         {/*<Route path='/fetch-data/:startDateIndex?' component={FetchData} />*/}
-    </Layout>
+    </React.Fragment>
 );
