@@ -12,7 +12,7 @@ type LoginProps =
 
 class Login extends React.PureComponent<LoginProps> {
 
-    public constructor(props) {
+    public constructor(props: LoginProps) {
         super(props);
     }
 
@@ -32,7 +32,7 @@ class Login extends React.PureComponent<LoginProps> {
             password: e.currentTarget['password'].value
         });
         this.props.history.push('/');
-        console.log('2')
+        console.log('2');
     }
 
     public render = () => {
