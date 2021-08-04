@@ -1,4 +1,5 @@
-﻿using ProjectManager.Domain.Models;
+﻿using ProjectManager.Domain;
+using ProjectManager.Domain.Models;
 using ProjectManager.Loader.Abstractions;
 using System;
 using System.IO;
@@ -8,7 +9,7 @@ namespace ProjectManager.Loader
 {
     public class ProjectSelector : IProjectSelector
     { 
-        public ProjectModel OpenProject(string path)
+        public ProjectInfo OpenProject(string path)
         {
             if (!Directory.Exists(path) && File.Exists(path))
             {
@@ -16,7 +17,7 @@ namespace ProjectManager.Loader
             }
             if (Directory.Exists(Path.GetPathRoot(path)))
             {
-                var projectInfo = new ProjectModel
+                var projectInfo = new ProjectInfo
                 {
                     ProjectName = Path.GetDirectoryName(path),
                     RootPath = path

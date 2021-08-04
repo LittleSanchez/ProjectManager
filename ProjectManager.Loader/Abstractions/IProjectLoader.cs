@@ -12,6 +12,6 @@ namespace ProjectManager.Loader.Abstractions
     {
         
 
-        ProjectInfo Load(ProjectModel project);
+        ProjectInfo Load(ProjectInfo project);
     }
 }

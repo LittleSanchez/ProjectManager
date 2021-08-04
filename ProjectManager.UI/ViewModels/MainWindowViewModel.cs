@@ -1,9 +1,12 @@
 ﻿using Avalonia.Controls;
+using ProjectManager.Application.Interfaces;
+using ProjectManager.Domain;
 using ProjectManager.Domain.Models;
 using ProjectManager.Loader.Abstractions;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive;
 using System.Text;
@@ -11,46 +14,30 @@ using System.Threading.Tasks;
 
 namespace ProjectManager.UI.ViewModels
 {
-    public class MainWindowViewModel : ReactiveObject
+    public class MainWindowViewModel : ViewModelBase
     {
-
-        //DI
-        public IProjectSelector ProjectSelector { get; set; }
-        public IProjectLoader ProjectLoader { get; set; }
+        private readonly IServiceProvider serviceProvider = ServiceProviderFactory.ServiceProvider;
 
 
-        //Properties
-        private List<ProjectComponent> files;
-        public List<ProjectComponent> Files { 
-            get => files; 
-            set => this.RaiseAndSetIfChanged(ref files, value);  
-        }
 
-        //Commands
+        private ViewModelBase content;
 
-        public ReactiveCommand<Window, Unit> OpenProjectCommand{ get; }
-
-        public MainWindowViewModel(
-            IProjectSelector projectSelector,
-            IProjectLoader projectLoader)
+        public ViewModelBase Content
         {
-            
-            ProjectSelector = projectSelector;
-            ProjectLoader = projectLoader;
-
-            OpenProjectCommand = ReactiveCommand.CreateFromTask<Window>(OpenProject);
+            get => content;
+            set => this.RaiseAndSetIfChanged(ref content, value);
         }
 
-        public async Task OpenProject(Window window)
+        public MainWindowViewModel()
         {
-            var ofd = new OpenFileDialog();
-            var project = this.ProjectSelector.OpenProject((await ofd.ShowAsync(window)).First());
-            var projectInfo = this.ProjectLoader.Load(project);
-            if (projectInfo != null)
-            {
-                this.Files = projectInfo.Components;
-            }
-        }
+            Content = new ProjectListViewModel(
+                serviceProvider.GetService(typeof(IProjectSelector)) as IProjectSelector,
+                        serviceProvider.GetService(typeof(IProjectLoader)) as IProjectLoader,
+                        serviceProvider.GetService(typeof(IProjectSerializer)) as IProjectSerializer,
+                        serviceProvider.GetService(typeof(IProjectModuleCompiler)) as IProjectModuleCompiler
+                );
 
+            //Content = new AuthViewModel();
+        }
     }
 }

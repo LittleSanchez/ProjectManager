@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ProjectManager.Domain.Storage;
 
 namespace ProjectManager.EFData
 {
@@ -13,7 +14,10 @@ namespace ProjectManager.EFData
                     IdentityRoleClaim<long>, IdentityUserToken<long>>
     {
 
-     
+
+        public DbSet<Module> Modules { get; set; }
+        public DbSet<ModuleFile> ModuleFiles { get; set; }
+
 
         public DataContext(DbContextOptions<DataContext> options)
             : base(options)

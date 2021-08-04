@@ -28,6 +28,7 @@ using ProjectManager.Infrastructure.Security;
 using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
 using FluentValidation.AspNetCore;
+using Microsoft.Extensions.Logging;
 
 namespace ProjectManager.Website
 {
@@ -43,6 +44,13 @@ namespace ProjectManager.Website
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddConsole();
+            });
+            var logger = loggerFactory.CreateLogger<Startup>();
+            //services.AddSingleton(typeof(LoggerFactory), loggerFactory);
+            logger.LogWarning("Log warning: {0}", "Application logger setuped correctly");
             //services.AddControllersWithViews();
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>

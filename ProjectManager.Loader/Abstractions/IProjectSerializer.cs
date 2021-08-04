@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectManager.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace ProjectManager.Loader.Abstractions
 {
     public interface IProjectSerializer
     {
-        string Serialize(string packageFilePath);
+        String Serialize(string filePath, ModuleInfo module);
+        String Deserialize(String packageBinaryPath, String destFolder);
     }
 }

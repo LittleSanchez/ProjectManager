@@ -14,22 +14,21 @@ namespace ProjectManager.Loader
     public class ProjectLoader : ProjectLoaderBase, IProjectLoader
     {
 
-        public ProjectLoader(LoaderConfig config) : base(config)
+        public ProjectLoader() 
         {
             
         }
 
-        public ProjectInfo Load(ProjectModel project)
+        public ProjectInfo Load(ProjectInfo project)
         {
-            var projectInfo = new ProjectInfo();
-            var iterateComponents = ComponentsSelector(project.RootPath).Select(x => x.Substring(project.RootPath.Length + 1)).ToList();
+            var iterateComponents = ComponentsSelector(project.RootPath).ToList();
             Console.WriteLine(string.Join("\n", iterateComponents));
-            projectInfo.Components = iterateComponents.Select(x => new ProjectComponent
+            project.Components = iterateComponents.Select(x => new ProjectComponent
             {
                 ComponentName = Path.GetFileName(x),
                 FilePath = x
             }).ToList();
-            return projectInfo;
+            return project;
         }
 
        

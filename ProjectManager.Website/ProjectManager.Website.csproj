@@ -71,6 +71,7 @@
 
   <ItemGroup>
     <Folder Include="CQRS\Auth\Registration\" />
+    <Folder Include="DTO\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

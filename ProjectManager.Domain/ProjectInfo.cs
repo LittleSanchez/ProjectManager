@@ -10,7 +10,8 @@ namespace ProjectManager.Domain
     public class ProjectInfo
     {
         public List<ProjectComponent> Components { get; set; }
-
+        public string ProjectName { get; set; }
+        public string RootPath { get; set; }
 
         public ProjectInfo()
         {

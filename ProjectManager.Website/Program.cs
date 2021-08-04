@@ -13,6 +13,7 @@ namespace ProjectManager.Website
     {
         public static void Main(string[] args)
         {
+
             CreateHostBuilder(args).Build().Run();
         }
 

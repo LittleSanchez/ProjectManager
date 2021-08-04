@@ -21,4 +21,9 @@
     <ProjectReference Include="..\ProjectManager.Domain\ProjectManager.Domain.csproj" />
     <ProjectReference Include="..\ProjectManager.Loader\ProjectManager.Loader.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\AuthView.axaml.cs">
+      <DependentUpon>AuthView.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>
