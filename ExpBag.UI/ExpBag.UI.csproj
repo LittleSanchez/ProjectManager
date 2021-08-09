@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\net5.0\loader_config.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.10.6" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.6" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.6" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.6" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ExpBag.Infrastructure\ExpBag.Infrastructure.csproj" />
+    <ProjectReference Include="..\ExpBag.Loader\ExpBag.Loader.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\AuthView.axaml.cs">
+      <DependentUpon>AuthView.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

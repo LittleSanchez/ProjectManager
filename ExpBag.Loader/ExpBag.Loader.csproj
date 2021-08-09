@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ExpBag.Domain\ExpBag.Domain.csproj" />
+    <ProjectReference Include="..\ExpBag.Infrastructure\ExpBag.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
