@@ -29,6 +29,7 @@ using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.Logging;
+using System.IO;
 
 namespace ExpBag.Website
 {
@@ -51,6 +52,7 @@ namespace ExpBag.Website
             var logger = loggerFactory.CreateLogger<Startup>();
             //services.AddSingleton(typeof(LoggerFactory), loggerFactory);
             logger.LogWarning("Log warning: {0}", "Application logger setuped correctly");
+            logger.LogInformation("Log info: Working directory - {0}", Directory.GetCurrentDirectory());
             //services.AddControllersWithViews();
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
