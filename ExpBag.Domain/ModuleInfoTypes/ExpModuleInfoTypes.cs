@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ExpBag.Domain.ModuleInfoTypes
 {
-    public class ExpModuleInfoTypes
+    public class ExpModuleInfoType
     {
         public int Id { get; set; }
-        public string ModuleInfoTypeName { get; set; }
+        public string Name { get; set; }
     }
 }

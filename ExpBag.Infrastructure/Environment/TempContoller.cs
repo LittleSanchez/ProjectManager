@@ -10,7 +10,7 @@ namespace ExpBag.Infrastructure.Environment
 {
     public class TempContoller : ITempController
     {
-        public const string TempFolderName = ".trash_bag";
+        public const string TempFolderName = ".expbag";
 
         static TempContoller()
         {

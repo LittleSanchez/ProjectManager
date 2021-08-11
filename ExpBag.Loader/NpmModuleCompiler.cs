@@ -1,6 +1,7 @@
 ﻿using ExpBag.Application.Interfaces;
 using ExpBag.Domain;
 using ExpBag.Domain.Models;
+using ExpBag.Domain.ModuleInfoTypes.Npm;
 using ExpBag.Infrastructure.Extentions;
 using ExpBag.Loader.Abstractions;
 using System;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace ExpBag.Loader
 {
-    public class ProjectModuleCompiler : IProjectModuleCompiler
+    public class NpmModuleCompiler : IProjectModuleCompiler
     {
         private const string FILE_REGEX = "[\'\"]{1}(\\.+\\/.+)[\'\"]{1}";
         private const string MODULE_REGEX = "[\'\"]{1}(.+)[\'\"]{1}";
@@ -22,16 +23,17 @@ namespace ExpBag.Loader
 
         private readonly ITempController tempController;
 
-        public ProjectModuleCompiler(ITempController _tempController)
+        public NpmModuleCompiler(ITempController _tempController)
         {
             tempController = _tempController;
         }
 
-        public async Task<ModuleInfo> CompileAsync(ProjectInfo project, string targetFile)
+        public async Task<ModuleInfo> CompileAsync(ProjectInfo project, string targetFile, string destinationFolder)
         {
             var moduleName = Path.GetFileNameWithoutExtension(targetFile);
 
-            string moduleDirectory = tempController.CreateTempDirectory(moduleName);
+            //string moduleDirectory = tempController.CreateTempDirectory(moduleName);
+            string moduleDirectory = destinationFolder;
             var files = await GetIncludedFilesAsync(targetFile);
             var modules = await GetIncludedModulesAsync(targetFile);
             files.Add(targetFile);
@@ -48,12 +50,18 @@ namespace ExpBag.Loader
                 files[i] = tempPath;
             }
 
-            return new ModuleInfo
+            //return new ModuleInfo
+            //{
+            //    IncludedFiles = files,
+            //    IncludedModules = modules,
+            //    ModuleName = moduleName,
+            //    RootPath = moduleDirectory
+            //};
+            return new NpmModuleInfo
             {
                 IncludedFiles = files,
-                IncludedModules = modules,
-                ModuleName = moduleName,
-                RootPath = moduleDirectory
+                IncludedNpmModules = modules,
+                ModuleName = moduleName
             };
         }
 

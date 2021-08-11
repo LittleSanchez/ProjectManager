@@ -19,6 +19,6 @@ namespace ExpBag.Loader.Abstractions
 
     public interface IProjectModuleCompiler
     {
-        Task<ModuleInfo> CompileAsync(ProjectInfo project, string targetFile);
+        Task<ModuleInfo> CompileAsync(ProjectInfo project, string targetFile, string destinationFolder);
     }
 }

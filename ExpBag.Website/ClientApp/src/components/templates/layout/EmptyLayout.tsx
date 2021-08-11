@@ -5,7 +5,7 @@ export default class EmptyLayout extends React.PureComponent<{}, { children?: Re
     public render() {
         return (
             <React.Fragment>
-                <Container>
+                <Container fluid>
                     {this.props.children}
                 </Container>
             </React.Fragment>

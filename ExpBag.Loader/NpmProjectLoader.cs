@@ -1,4 +1,6 @@
-﻿using ExpBag.Domain.Constants;
+﻿using ExpBag.Domain;
+using ExpBag.Domain.Constants;
+using ExpBag.Domain.Models;
 using ExpBag.Loader.Abstractions;
 using System;
 using System.Collections.Generic;
@@ -10,16 +12,17 @@ using System.Threading.Tasks;
 
 namespace ExpBag.Loader
 {
-    public class ProjectLoaderBase
+    public class NpmProjectLoader : IProjectLoader
     {
         public List<string> AvailableExtentions { get; set; }
         public List<string> IgnoredNames { get; set; }
 
-        public ProjectLoaderBase()
+        public NpmProjectLoader() 
         {
-            AvailableExtentions = LoaderConfig.Instance.AvailableExtentions;
-            IgnoredNames = LoaderConfig.Instance.IgnoredNames;
+            AvailableExtentions = NpmLoaderConfig.Instance.AvailableExtentions;
+            IgnoredNames = NpmLoaderConfig.Instance.IgnoredNames;
         }
+
 
         public List<string> ComponentsSelector(string root)
         {
@@ -34,5 +37,18 @@ namespace ExpBag.Loader
             return components;
         }
 
+        public ProjectInfo Load(ProjectInfo project)
+        {
+            var iterateComponents = ComponentsSelector(project.RootPath).ToList();
+            Console.WriteLine(string.Join("\n", iterateComponents));
+            project.Components = iterateComponents.Select(x => new ProjectComponent
+            {
+                ComponentName = Path.GetFileName(x),
+                FilePath = x
+            }).ToList();
+            return project;
+        }
+
+       
     }
 }

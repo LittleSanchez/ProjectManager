@@ -7,9 +7,12 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
+    <Folder Include="Views\Pages\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="bin\Debug\net5.0\constants.json" />
     <None Include="bin\Debug\net5.0\loader_config.json" />
+    <None Include="bin\Debug\net5.0\npm_loader_config.json" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.6" />

@@ -1,8 +1,8 @@
 ﻿import * as React from "react";
 import { connect } from "react-redux";
 import { ConnectedRouterProps, connectRouter } from 'connected-react-router'
-import { ApplicationState } from "../../store";
-import * as AuthStore from "../../store/authStore";
+import { ApplicationState } from "../../../store";
+import * as AuthStore from "../../../store/authStore";
 
 type LoginProps =
     AuthStore.AuthState // ... state we've requested from the Redux store

@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using ExpBag.Application.Interfaces;
 using ExpBag.Domain;
 using ExpBag.Domain.Models;
 using ExpBag.Loader.Abstractions;
@@ -6,6 +7,7 @@ using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reactive;
 using System.Text;
@@ -22,6 +24,7 @@ namespace ExpBag.UI.ViewModels
         public IProjectLoader ProjectLoader { get; set; }
         public IProjectSerializer ProjectSerializer { get; set; }
         public IProjectModuleCompiler ProjectModuleCompiler { get; set; }
+        public ITempController TempController { get; set; }
 
 
         //Properties
@@ -57,13 +60,15 @@ namespace ExpBag.UI.ViewModels
             IProjectSelector projectSelector,
             IProjectLoader projectLoader,
             IProjectSerializer projectSerializer,
-            IProjectModuleCompiler projectModuleCompiler)
+            IProjectModuleCompiler projectModuleCompiler, 
+            ITempController tempController)
         {
 
             ProjectSelector = projectSelector;
             ProjectLoader = projectLoader;
             ProjectSerializer = projectSerializer;
             ProjectModuleCompiler = projectModuleCompiler;
+            TempController = tempController;
 
             OpenProjectCommand = ReactiveCommand.CreateFromTask<Window>(OpenProject);
             SelectListItemCommand = ReactiveCommand.CreateFromTask(SelectListItem);
@@ -85,7 +90,10 @@ namespace ExpBag.UI.ViewModels
         {
             Debug.WriteLine(SelectedFile);
 
-            var module = await ProjectModuleCompiler.CompileAsync(SelectedProject, SelectedFile.FilePath);
+            var module = await ProjectModuleCompiler.CompileAsync(
+                SelectedProject, 
+                SelectedFile.FilePath, 
+                TempController.CreateTempDirectory(Path.GetFileName(SelectedFile.FilePath)));
             //ProjectSerializer.Serialize(filePath, module);
 
         }

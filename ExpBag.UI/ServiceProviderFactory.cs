@@ -21,10 +21,12 @@ namespace ExpBag.UI
 
             serviceCollection.AddSingleton<ITempController, TempContoller>();
 
-            serviceCollection.AddSingleton<IProjectLoader, ProjectLoader>();
+            serviceCollection.AddSingleton<Loader.Abstractions.IProjectLoader, NpmProjectLoader>();
             serviceCollection.AddSingleton<IProjectSelector, ProjectSelector>();
             serviceCollection.AddSingleton<IProjectSerializer, ProjectSerializer>();
-            serviceCollection.AddSingleton<IProjectModuleCompiler, ProjectModuleCompiler>();
+            serviceCollection.AddSingleton<IProjectModuleCompiler, NpmModuleCompiler>();
+
+            serviceCollection.AddSingleton<ITempController, TempContoller>();
 
 
             ServiceProvider = serviceCollection.BuildServiceProvider();

@@ -36,21 +36,36 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="bin\Debug\net5.0\ClientApp — копия\**" />
+    <Compile Remove="bin\Debug\net5.0\ref\**" />
+    <Compile Remove="bin\Debug\net5.0\runtimes\**" />
+    <Compile Remove="bin\Release\net5.0\**" />
     <Compile Remove="ClientApp — копия\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="bin\Debug\net5.0\ClientApp — копия\**" />
+    <Content Remove="bin\Debug\net5.0\ref\**" />
+    <Content Remove="bin\Debug\net5.0\runtimes\**" />
+    <Content Remove="bin\Release\net5.0\**" />
     <Content Remove="ClientApp — копия\**" />
+    <EmbeddedResource Remove="bin\Debug\net5.0\ClientApp — копия\**" />
+    <EmbeddedResource Remove="bin\Debug\net5.0\ref\**" />
+    <EmbeddedResource Remove="bin\Debug\net5.0\runtimes\**" />
+    <EmbeddedResource Remove="bin\Release\net5.0\**" />
     <EmbeddedResource Remove="ClientApp — копия\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="bin\Debug\net5.0\ClientApp — копия\**" />
+    <None Remove="bin\Debug\net5.0\ref\**" />
+    <None Remove="bin\Debug\net5.0\runtimes\**" />
+    <None Remove="bin\Release\net5.0\**" />
     <None Remove="ClientApp — копия\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\components\About.tsx" />
-    <None Remove="ClientApp\src\components\Auth\Login.tsx" />
-    <None Remove="ClientApp\src\components\Auth\Registration.tsx" />
+    <None Remove="ClientApp\src\components\pages\auth\Login.tsx" />
+    <None Remove="ClientApp\src\components\pages\auth\Registration.tsx" />
+    <None Remove="ClientApp\src\components\pages\Home.tsx" />
     <None Remove="ClientApp\src\components\templates\EmptyLayout.tsx" />
-    <None Remove="ClientApp\src\components\templates\index.tsx" />
     <None Remove="ClientApp\src\store\authStore.ts" />
   </ItemGroup>
 
@@ -59,17 +74,21 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\components\About.tsx" />
-    <TypeScriptCompile Include="ClientApp\src\components\Auth\Login.tsx" />
-    <TypeScriptCompile Include="ClientApp\src\components\Auth\Registration.tsx" />
-    <TypeScriptCompile Include="ClientApp\src\components\templates\EmptyLayout.tsx" />
-    <TypeScriptCompile Include="ClientApp\src\components\templates\index.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\pages\auth\Login.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\pages\auth\Registration.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\pages\Home.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\templates\layout\EmptyLayout.tsx" />
     <TypeScriptCompile Include="ClientApp\src\store\authStore.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="bin\Debug\net5.0\" />
     <Folder Include="CQRS\Auth\Registration\" />
     <Folder Include="DTO\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\Release\net5.0\git-update.sh" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
