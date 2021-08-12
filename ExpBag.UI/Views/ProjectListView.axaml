@@ -26,7 +26,7 @@
               <DataTemplate>
                 <DockPanel>
                   <StackPanel>
-                    <TextBlock Text="{Binding ComponentName, Mode=OneWay}"/>
+                    <TextBlock Text="{Binding FileName, Mode=OneWay}"/>
                     <TextBlock Classes="small" Text="{Binding FilePath}"/>
                   </StackPanel>
                 </DockPanel>

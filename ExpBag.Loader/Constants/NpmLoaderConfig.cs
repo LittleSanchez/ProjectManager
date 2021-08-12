@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace ExpBag.Domain.Constants
+namespace ExpBag.Loader.Constants
 {
     public class NpmLoaderConfig
     {

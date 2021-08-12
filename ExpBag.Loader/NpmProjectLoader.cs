@@ -1,7 +1,8 @@
 ﻿using ExpBag.Domain;
-using ExpBag.Domain.Constants;
+using ExpBag.Domain.DTO;
 using ExpBag.Domain.Models;
 using ExpBag.Loader.Abstractions;
+using ExpBag.Loader.Constants;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,9 +42,9 @@ namespace ExpBag.Loader
         {
             var iterateComponents = ComponentsSelector(project.RootPath).ToList();
             Console.WriteLine(string.Join("\n", iterateComponents));
-            project.Components = iterateComponents.Select(x => new ProjectComponent
+            project.Components = iterateComponents.Select(x => new ExpModuleFileDTO
             {
-                ComponentName = Path.GetFileName(x),
+                FileName = Path.GetFileName(x),
                 FilePath = x
             }).ToList();
             return project;

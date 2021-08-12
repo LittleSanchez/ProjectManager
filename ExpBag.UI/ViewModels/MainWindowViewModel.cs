@@ -33,7 +33,7 @@ namespace ExpBag.UI.ViewModels
             Content = new ProjectListViewModel(
                 serviceProvider.GetService(typeof(IProjectSelector)) as IProjectSelector,
                         serviceProvider.GetService(typeof(IProjectLoader)) as IProjectLoader,
-                        serviceProvider.GetService(typeof(IProjectSerializer)) as IProjectSerializer,
+                        //serviceProvider.GetService(typeof(IProjectSerializer)) as IProjectSerializer,
                         serviceProvider.GetService(typeof(IProjectModuleCompiler)) as IProjectModuleCompiler,
                         serviceProvider.GetService(typeof(ITempController)) as ITempController
                 );

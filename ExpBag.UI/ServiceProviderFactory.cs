@@ -23,7 +23,7 @@ namespace ExpBag.UI
 
             serviceCollection.AddSingleton<Loader.Abstractions.IProjectLoader, NpmProjectLoader>();
             serviceCollection.AddSingleton<IProjectSelector, ProjectSelector>();
-            serviceCollection.AddSingleton<IProjectSerializer, ProjectSerializer>();
+            //serviceCollection.AddSingleton<IProjectSerializer, ProjectSerializer>();
             serviceCollection.AddSingleton<IProjectModuleCompiler, NpmModuleCompiler>();
 
             serviceCollection.AddSingleton<ITempController, TempContoller>();

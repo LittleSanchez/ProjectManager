@@ -68,6 +68,9 @@ namespace ExpBag.Website
             //services.AddMediatR(typeof(RegistrationHandler).Assembly);
 
             // In production, the React files will be served from this directory
+
+            
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";

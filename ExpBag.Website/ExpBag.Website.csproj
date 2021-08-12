@@ -85,7 +85,6 @@
     <Folder Include="bin\Debug\net5.0\" />
     <Folder Include="bin\Release\net5.0\" />
     <Folder Include="CQRS\Auth\Registration\" />
-    <Folder Include="DTO\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

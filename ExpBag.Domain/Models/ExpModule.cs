@@ -14,6 +14,7 @@ namespace ExpBag.Domain.Models
         public string ModuleInfoType { get; set; } // Type of JSON Object
         public string ServerLocation { get; set; }
 
+        public List<ExpModuleFile> IncludedFiles { get; set; }
         public AppUser User { get; set; }
         public ExpModuleExtention ModuleExtention { get; set; }
     }

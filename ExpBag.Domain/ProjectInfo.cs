@@ -1,4 +1,5 @@
-﻿using ExpBag.Domain.Models;
+﻿using ExpBag.Domain.DTO;
+using ExpBag.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,13 @@ namespace ExpBag.Domain
 {
     public class ProjectInfo
     {
-        public List<ProjectComponent> Components { get; set; }
+        public List<ExpModuleFileDTO> Components { get; set; }
         public string ProjectName { get; set; }
         public string RootPath { get; set; }
 
         public ProjectInfo()
         {
-            Components = new List<ProjectComponent>();
+            Components = new List<ExpModuleFileDTO>();
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Avalonia.Controls;
 using ExpBag.Application.Interfaces;
 using ExpBag.Domain;
+using ExpBag.Domain.DTO;
 using ExpBag.Domain.Models;
+using ExpBag.Loader;
 using ExpBag.Loader.Abstractions;
 using ReactiveUI;
 using System;
@@ -22,21 +24,21 @@ namespace ExpBag.UI.ViewModels
         //DI
         public IProjectSelector ProjectSelector { get; set; }
         public IProjectLoader ProjectLoader { get; set; }
-        public IProjectSerializer ProjectSerializer { get; set; }
+        //public IProjectSerializer ProjectSerializer { get; set; }
         public IProjectModuleCompiler ProjectModuleCompiler { get; set; }
         public ITempController TempController { get; set; }
 
 
         //Properties
-        private List<ProjectComponent> files;
-        public List<ProjectComponent> Files
+        private List<ExpModuleFileDTO> files;
+        public List<ExpModuleFileDTO> Files
         {
             get => files;
             set => this.RaiseAndSetIfChanged(ref files, value);
         }
 
-        private ProjectComponent selectedFile;
-        public ProjectComponent SelectedFile
+        private ExpModuleFileDTO selectedFile;
+        public ExpModuleFileDTO SelectedFile
         {
             get => selectedFile;
             set => this.RaiseAndSetIfChanged(ref selectedFile, value);
@@ -59,14 +61,14 @@ namespace ExpBag.UI.ViewModels
         public ProjectListViewModel(
             IProjectSelector projectSelector,
             IProjectLoader projectLoader,
-            IProjectSerializer projectSerializer,
-            IProjectModuleCompiler projectModuleCompiler, 
+            //IProjectSerializer projectSerializer,
+            IProjectModuleCompiler projectModuleCompiler,
             ITempController tempController)
         {
 
             ProjectSelector = projectSelector;
             ProjectLoader = projectLoader;
-            ProjectSerializer = projectSerializer;
+            //ProjectSerializer = projectSerializer;
             ProjectModuleCompiler = projectModuleCompiler;
             TempController = tempController;
 
@@ -91,9 +93,13 @@ namespace ExpBag.UI.ViewModels
             Debug.WriteLine(SelectedFile);
 
             var module = await ProjectModuleCompiler.CompileAsync(
-                SelectedProject, 
-                SelectedFile.FilePath, 
-                TempController.CreateTempDirectory(Path.GetFileName(SelectedFile.FilePath)));
+                SelectedProject,
+                new NpmModuleCompilerOptions
+                {
+                    DestinationFolder = TempController.CreateTempDirectory(Path.GetFileName(SelectedFile.FilePath)),
+                    TargetFile = SelectedFile.FilePath,
+                    ModuleName = Path.GetFileNameWithoutExtension(SelectedFile.FileName)
+                });
             //ProjectSerializer.Serialize(filePath, module);
 
         }

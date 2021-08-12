@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExpBag.Domain.Constants
+namespace ExpBag.Loader.Constants
 {
     // config files are located in ExpBag.UI 
 
