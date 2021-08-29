@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES6",
     "allowJs": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -13,12 +13,14 @@
     "noEmit": true,
     "jsx": "preserve",
     "lib": [
-      "es2015",
+      "ES2019",
       "dom"
     ],
-    "skipLibCheck": false
+    "skipLibCheck": false,
+    "typeRoots": [ "./types", "./node_modules/@types"]
   },
   "include": [
     "src"
-  ]
+  ],
+  "exclude": ["node_modules", "typings"]
 }

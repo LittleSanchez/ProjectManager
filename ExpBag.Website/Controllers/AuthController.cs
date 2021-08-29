@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ExpBag.Domain.DTO;
+using ExpBag.Domain.CQRSObjects;
 
 namespace ExpBag.Website.Controllers
 {
@@ -18,13 +20,13 @@ namespace ExpBag.Website.Controllers
     public class AuthController : BaseController
     {
         [HttpPost("login")]
-        public async Task<ActionResult<UserViewModel>> Login(LoginQuery query)
+        public async Task<ActionResult<UserDTO>> Login(LoginQuery query)
         {
             return Ok(await Mediator.Send(query));
         }
 
-        [HttpPost("register")]
-        public async Task<ActionResult<UserViewModel>> Register(RegistrationCommand command)
+        [HttpPost("registration")] // Change in ClientApp !!!!!!! (register - registration)
+        public async Task<ActionResult<UserDTO>> Register(RegistrationCommand command)
         {
             return Ok(await Mediator.Send(command));
         }

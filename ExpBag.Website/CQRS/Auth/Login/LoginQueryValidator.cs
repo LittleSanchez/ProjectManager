@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using ExpBag.Domain.CQRSObjects;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;

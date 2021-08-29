@@ -1,0 +1,132 @@
+{
+  "background": {
+    "color": {
+      "value": "#ffffff"
+    },
+    "position": "50% 50%",
+    "repeat": "no-repeat",
+    "size": "cover"
+  },
+  "backgroundMask": {
+    "cover": {
+      "color": {
+        "value": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      }
+    },
+    "enable": true
+  },
+  "fullScreen": {
+    "enable": true,
+    "zIndex": -10
+  },
+  "fpsLimit": 60,
+  "interactivity": {
+    "events": {
+      "onClick": {
+        "mode": "push"
+      },
+      "onHover": {
+        "mode": "bubble",
+        "parallax": {
+          "force": 60
+        }
+      },
+      "resize": false
+    },
+    "modes": {
+      "bubble": {
+        "distance": 400,
+        "duration": 2,
+        "opacity": 1,
+        "size": 100
+      },
+      "grab": {
+        "distance": 400
+      }
+    }
+  },
+  "particles": {
+    "collisions": {
+      "overlap": {
+        "enable": false
+      }
+    },
+    "color": {
+      "value": "#ffffff",
+      "animation": {
+        "h": {
+          "count": 40,
+          "speed": 10
+        },
+        "s": {
+          "count": 40,
+          "speed": 10
+        },
+        "l": {
+          "count": 40,
+          "speed": 10
+        }
+      }
+    },
+    "links": {
+      "color": {
+        "value": "#ffffff"
+      },
+      "distance": 150,
+      "enable": true,
+      "frequency": 5,
+      "opacity": 0.75
+    },
+    "move": {
+      "attract": {
+        "rotate": {
+          "x": 600,
+          "y": 1200
+        }
+      },
+      "enable": true,
+      "path": {},
+      "outModes": {
+        "bottom": "out",
+        "left": "out",
+        "right": "out",
+        "top": "out"
+      },
+      "spin": {}
+    },
+    "number": {
+      "density": {
+        "enable": true
+      },
+      "value": 80
+    },
+    "opacity": {
+      "animation": {
+        "speed": 1,
+        "minimumValue": 0.1
+      }
+    },
+    "size": {
+      "value": 0,
+      "animation": {
+        "count": 2,
+        "speed": 40,
+        "minimumValue": 0.1
+      }
+    },
+    "zIndex": {
+      "random": {
+        "enable": true,
+        "minimumValue": 3
+      },
+      "value": 3,
+      "opacityRate": 5,
+      "sizeRate": 5,
+      "velocityRate": 5
+    }
+  }
+}

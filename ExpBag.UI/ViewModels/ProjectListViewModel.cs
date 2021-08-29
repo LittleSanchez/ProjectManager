@@ -5,6 +5,8 @@ using ExpBag.Domain.DTO;
 using ExpBag.Domain.Models;
 using ExpBag.Loader;
 using ExpBag.Loader.Abstractions;
+using ExpBag.UI.Startup;
+using ExpBag.UI.Store;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,7 @@ using System.Linq;
 using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ExpBag.UI.ViewModels
 {
@@ -22,11 +25,18 @@ namespace ExpBag.UI.ViewModels
         public readonly IServiceProvider ServiceProvider = ServiceProviderFactory.ServiceProvider;
 
         //DI
-        public IProjectSelector ProjectSelector { get; set; }
-        public IProjectLoader ProjectLoader { get; set; }
+        public IProjectSelector? ProjectSelector { get; set; }
+        public IProjectLoader? ProjectLoader { get; set; }
         //public IProjectSerializer ProjectSerializer { get; set; }
-        public IProjectModuleCompiler ProjectModuleCompiler { get; set; }
-        public ITempController TempController { get; set; }
+        public IProjectModuleCompiler? ProjectModuleCompiler { get; set; }
+        public ITempController? TempController { get; set; }
+        public IAuthService? AuthService { get; set; }
+        public ApplicationStore? ApplicationStore{ get; set; }
+
+        //Store
+
+        public UserDTO Profile { get; set; }
+        private void UpdateProfile(UserDTO profile) => Profile = profile;
 
 
         //Properties
@@ -58,22 +68,21 @@ namespace ExpBag.UI.ViewModels
         public ReactiveCommand<Unit, Unit> SelectListItemCommand { get; }
 
 
-        public ProjectListViewModel(
-            IProjectSelector projectSelector,
-            IProjectLoader projectLoader,
-            //IProjectSerializer projectSerializer,
-            IProjectModuleCompiler projectModuleCompiler,
-            ITempController tempController)
+        public ProjectListViewModel()
         {
 
-            ProjectSelector = projectSelector;
-            ProjectLoader = projectLoader;
-            //ProjectSerializer = projectSerializer;
-            ProjectModuleCompiler = projectModuleCompiler;
-            TempController = tempController;
+            ProjectSelector = ServiceProvider.GetService<IProjectSelector>();
+            ProjectLoader = ServiceProvider.GetService<IProjectLoader>();
+            ProjectModuleCompiler = ServiceProvider.GetService<IProjectModuleCompiler>();
+            TempController = ServiceProvider.GetService<ITempController>();
+            AuthService = ServiceProvider.GetService<IAuthService>();
+            ApplicationStore = ServiceProvider.GetService<ApplicationStore>();
 
             OpenProjectCommand = ReactiveCommand.CreateFromTask<Window>(OpenProject);
             SelectListItemCommand = ReactiveCommand.CreateFromTask(SelectListItem);
+
+            //Connecting store events
+            ApplicationStore!.ProfileUpdated += UpdateProfile;
         }
 
         public async Task OpenProject(Window window)
@@ -90,8 +99,6 @@ namespace ExpBag.UI.ViewModels
 
         public async Task SelectListItem()
         {
-            Debug.WriteLine(SelectedFile);
-
             var module = await ProjectModuleCompiler.CompileAsync(
                 SelectedProject,
                 new NpmModuleCompilerOptions
@@ -100,8 +107,7 @@ namespace ExpBag.UI.ViewModels
                     TargetFile = SelectedFile.FilePath,
                     ModuleName = Path.GetFileNameWithoutExtension(SelectedFile.FileName)
                 });
-            //ProjectSerializer.Serialize(filePath, module);
-
+            
         }
 
     }

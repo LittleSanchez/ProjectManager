@@ -14,16 +14,27 @@ namespace ExpBag.Loader.Constants
         public const string CONFIG_TYPE = "npm";
         public static NpmLoaderConfig Instance { get; private set; } = NpmLoaderConfig.Load();
 
-        public List<string> AvailableExtentions { get; set; }
-        public List<string> IgnoredNames { get; set; }
+        public List<string> AvailableExtentions { get; set; } = new List<string>();
+        public List<string> IgnoredNames { get; set; } = new List<string>();
 
 
         private static NpmLoaderConfig Load()
         {
             if (Instance == null)
             {
-                var configFilePath = Constants.Instance.LoaderConfigFiles.First(x => x["type"].ToObject<string>() == CONFIG_TYPE)["name"].ToObject<string>();
-                Instance = JsonConvert.DeserializeObject<NpmLoaderConfig>(File.ReadAllText(configFilePath));
+                try
+                {
+                    var configFilePath = Constants.Instance.LoaderConfigFiles.First(x => x["type"].ToObject<string>() == CONFIG_TYPE)["name"].ToObject<string>();
+                    Instance = JsonConvert.DeserializeObject<NpmLoaderConfig>(File.ReadAllText(configFilePath));
+                }
+                catch(IOException)
+                {
+                    Instance = new NpmLoaderConfig();
+                }
+                catch(InvalidOperationException)
+                {
+                    Instance = new NpmLoaderConfig();
+                }
             }
             return Instance;
         }

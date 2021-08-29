@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { Container } from 'reactstrap';
 import { NavMenu } from '../navbar';
+import EmptyLayout from './EmptyLayout';
 
 export default class NavLayout extends React.PureComponent<{}, { children?: React.ReactNode }> {
     public render() {
         return (
             <React.Fragment>
-                <Container fluid>
-                    <NavMenu /> 
+                <EmptyLayout>
+                    <NavMenu/>
                     {this.props.children}
-                </Container>
+                </EmptyLayout>
             </React.Fragment>
         );
     }

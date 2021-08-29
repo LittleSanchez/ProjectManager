@@ -12,7 +12,8 @@ namespace ExpBag.Domain.DTO
         public int? ModuleId { get; set; } = null;
         public string FilePath { get; set; }
         public string FileName { get; set; }
-        public bool? IsLoaded { get; set; } = false;
+        public bool IsLoaded { get; set; }
 
+        public string ModuleName { get; set; }
     }
 }

@@ -3,6 +3,9 @@ using ExpBag.Application.Interfaces;
 using ExpBag.Domain;
 using ExpBag.Domain.Models;
 using ExpBag.Loader.Abstractions;
+using ExpBag.UI.Startup;
+using ExpBag.UI.Store;
+using ExpBag.Infrastructure.Extentions;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -11,13 +14,15 @@ using System.Linq;
 using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using ExpBag.Application.Constans;
 
 namespace ExpBag.UI.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private readonly IServiceProvider serviceProvider = ServiceProviderFactory.ServiceProvider;
-
+        private readonly IServiceProvider ServiceProvider = ServiceProviderFactory.ServiceProvider;
+        private readonly ApplicationStore? Store;
 
 
         private ViewModelBase content;
@@ -28,17 +33,53 @@ namespace ExpBag.UI.ViewModels
             set => this.RaiseAndSetIfChanged(ref content, value);
         }
 
+        private double _windowWidth;
+
+        public double WindowWidth
+        {
+            get { return _windowWidth; }
+            set { this.RaiseAndSetIfChanged(ref _windowWidth, value); }
+        }
+
+        private double _windowHeight;
+
+        public double WindowHeight
+        {
+            get { return _windowHeight; }
+            set { this.RaiseAndSetIfChanged(ref _windowHeight, value); }
+        }
+
+
+
+
+
         public MainWindowViewModel()
         {
-            Content = new ProjectListViewModel(
-                serviceProvider.GetService(typeof(IProjectSelector)) as IProjectSelector,
-                        serviceProvider.GetService(typeof(IProjectLoader)) as IProjectLoader,
-                        //serviceProvider.GetService(typeof(IProjectSerializer)) as IProjectSerializer,
-                        serviceProvider.GetService(typeof(IProjectModuleCompiler)) as IProjectModuleCompiler,
-                        serviceProvider.GetService(typeof(ITempController)) as ITempController
-                );
+            Store = ServiceProvider.GetService<ApplicationStore>();
 
-            //Content = new AuthViewModel();
+            //Content = applicationStore!.ActiveView;
+            //applicationStore.ActiveViewUpdated += UpdateContent;
+
+            UpdateViewSetup(Store.ViewSetup);
+            Store.ViewSetupUpdated += UpdateViewSetup;
+        }
+
+        private void UpdateViewSetup(ViewSetups viewSetup)
+        {
+            switch(viewSetup)
+            {
+                case ViewSetups.Auth:
+                    Content = ServiceProvider.GetService<AuthViewModel>();
+                    WindowWidth = 300;
+                    WindowHeight = 500;
+                    break;
+                case ViewSetups.EmptyProjectList:
+                case ViewSetups.DetailedProjectList:
+                    Content = ServiceProvider.GetService<MainViewModel>();
+                    WindowWidth = 750;
+                    WindowHeight = 500;
+                    break;
+            }
         }
     }
 }

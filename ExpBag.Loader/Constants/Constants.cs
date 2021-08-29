@@ -16,13 +16,21 @@ namespace ExpBag.Loader.Constants
         public const string CONSTANTS_FILE_PATH = "constants.json";
         public static Constants Instance { get; private set; } = Load();
 
-        public JArray LoaderConfigFiles { get; set; }
+        public JArray LoaderConfigFiles { get; set; } = new JArray();
 
         private static Constants Load()
         {
             if (Instance == null)
             {
-                Instance = JsonConvert.DeserializeObject<Constants>(File.ReadAllText(CONSTANTS_FILE_PATH));
+                try
+                {
+
+                    Instance = JsonConvert.DeserializeObject<Constants>(File.ReadAllText(CONSTANTS_FILE_PATH));
+                }
+                catch (IOException ioex)
+                {
+                    Instance = new Constants();
+                }
             }
             return Instance;
         }

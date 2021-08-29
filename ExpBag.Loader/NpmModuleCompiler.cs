@@ -213,8 +213,8 @@ namespace ExpBag.Loader
                 CreateNoWindow = true
             });
             var processInput = process.StandardInput;
-            processInput.WriteLine("npm init --yes");
-            process.Dispose();
+            processInput.WriteLine("npm init --yes & exit");
+            process.WaitForExit();
             var packageData = JObject.Parse(File.ReadAllText(packageFilePath));
             foreach(var item in options)
             {

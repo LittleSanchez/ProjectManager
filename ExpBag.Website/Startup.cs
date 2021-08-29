@@ -30,6 +30,10 @@ using System.Collections.Generic;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.Logging;
 using System.IO;
+using AutoMapper;
+using ExpBag.Application.AutoMapper;
+using ExpBag.Domain.CQRSObjects;
+using Microsoft.Extensions.FileProviders;
 
 namespace ExpBag.Website
 {
@@ -69,14 +73,19 @@ namespace ExpBag.Website
 
             // In production, the React files will be served from this directory
 
-            
+
 
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
 
-            
+            //Automapper `
+            services.AddAutoMapper(MapperProfile.Create);
+
+
+
+
             services.AddTransient<IValidator<LoginQuery>, LoginQueryValidator>();
             services.AddTransient<IValidator<RegistrationCommand>, RegistrationValidation>();
 
@@ -157,7 +166,22 @@ namespace ExpBag.Website
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+
+            foreach (var staticFolders in Configuration.GetSection("StaticFolders").GetChildren())
+            {
+                app.UseStaticFiles(new StaticFileOptions
+                {
+                    FileProvider = new PhysicalFileProvider(
+                Path.Combine(env.ContentRootPath, staticFolders["Path"])),
+                    RequestPath = staticFolders["Link"]
+                });
+
+            }
+
+            //Presets folder
+
+            //Assets folder
+
             app.UseSpaStaticFiles();
 
             app.UseRouting();

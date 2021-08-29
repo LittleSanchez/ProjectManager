@@ -9,10 +9,12 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using ExpBag.Domain.DTO;
+using ExpBag.Domain.CQRSObjects;
 
 namespace ExpBag.Website.CQRS.Auth.Login
 {
-    public class LoginHandler : IRequestHandler<LoginQuery, UserViewModel>
+    public class LoginHandler : IRequestHandler<LoginQuery, UserDTO>
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
@@ -25,7 +27,7 @@ namespace ExpBag.Website.CQRS.Auth.Login
             _jwtGenerator = jwtGenerator;
         }
 
-        public async Task<UserViewModel> Handle(LoginQuery request, CancellationToken cancellationToken)
+        public async Task<UserDTO> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
             if (user == null)
@@ -37,7 +39,7 @@ namespace ExpBag.Website.CQRS.Auth.Login
 
             if (result.Succeeded)
             {
-                return new UserViewModel
+                return new UserDTO
                 {
                     DisplayName = user.DisplayName,
                     Token = _jwtGenerator.CreateToken(user),

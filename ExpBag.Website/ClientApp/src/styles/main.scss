@@ -1,0 +1,35 @@
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+// GLOBAL STYLES
+@import "global/custom-variables";
+@import "global/functions";
+@import "global/mixins";
+@import "global/reboot";
+@import "global/type";
+// @import "global/grid";
+@import "global/forms";
+// @import "global/buttons";
+// @import "global/utilities";
+@import "global/fonts";
+// @import "global/tabs";
+// PLUGINS STYLE
+// @import "plugins/icons";
+// BLOCKS STYLE
+// @import "blocks/popup-block";
+// @import "blocks/page-header";
+@import "blocks/app-form";
+body {
+    position: relative;
+    background-color: #fff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: $font-family;
+    color: #000;
+    font-weight: 400;
+    line-height: 1.2;
+    font-size: 16px;
+    min-width: 320px;
+}
+
+body * {
+    color: white!important;
+}

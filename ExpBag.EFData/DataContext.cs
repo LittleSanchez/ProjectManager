@@ -1,4 +1,5 @@
 ﻿using ExpBag.Domain;
+using ExpBag.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,10 @@ namespace ExpBag.EFData
 
         //public DbSet<Module> Modules { get; set; }
         //public DbSet<ModuleFile> ModuleFiles { get; set; }
+
+        public DbSet<ExpModule> Modules { get; set; }
+        public DbSet<ExpModuleFile> ModuleFiles { get; set; }
+        public DbSet<ExpModuleExtention> ModuleExtentions { get; set; }
 
 
         public DataContext(DbContextOptions<DataContext> options)

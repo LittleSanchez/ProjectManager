@@ -69,7 +69,7 @@ export const actionCreators = {
         console.log("Auth state request login")
         console.log(loginData);
         const authState = getState().auth;
-        if (authState && authState.loggedIn == false) {
+        if (authState && authState.loggedIn === false) {
             console.log(authState);
             fetch(`api/auth/login`, {
                 method: 'POST',

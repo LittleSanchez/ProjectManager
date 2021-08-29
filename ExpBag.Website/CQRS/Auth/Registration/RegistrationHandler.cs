@@ -13,10 +13,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ExpBag.Website.CQRS.Auth;
+using ExpBag.Domain.DTO;
+using ExpBag.Domain.CQRSObjects;
 
 namespace ExpBag.Website.CQRS.Auth
 {
-	public class RegistrationHandler : IRequestHandler<RegistrationCommand, UserViewModel>
+	public class RegistrationHandler : IRequestHandler<RegistrationCommand, UserDTO>
 	{
 		private readonly UserManager<AppUser> _userManager;
 		private readonly IJwtGenerator _jwtGenerator;
@@ -29,7 +31,7 @@ namespace ExpBag.Website.CQRS.Auth
 			_jwtGenerator = jwtGenerator;
 		}
 
-		public async Task<UserViewModel> Handle(RegistrationCommand request, CancellationToken cancellationToken)
+		public async Task<UserDTO> Handle(RegistrationCommand request, CancellationToken cancellationToken)
 		{
 			if (await _context.Users.Where(x => x.Email == request.Email).AnyAsync())
 			{
@@ -45,14 +47,14 @@ namespace ExpBag.Website.CQRS.Auth
 			{
 				DisplayName = request.DisplayName,
 				Email = request.Email,
-				UserName = request.Email
+				UserName = request.UserName
 			};
 
 			var result = await _userManager.CreateAsync(user, request.Password);
 
 			if (result.Succeeded)
 			{
-				return new UserViewModel
+				return new UserDTO
 				{
 					DisplayName = user.DisplayName,
 					Token = _jwtGenerator.CreateToken(user),

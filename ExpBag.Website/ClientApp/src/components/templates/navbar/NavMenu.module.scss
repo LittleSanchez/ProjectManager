@@ -1,0 +1,18 @@
+@import "../../../styles/global/custom-variables.scss";
+.navbar {
+    // max-width: $max-container-width;
+    &__logo {
+        margin: 10px auto;
+        &,
+        &:hover {
+            text-decoration: none;
+        }
+        &-img {
+            height: 5em;
+            margin-right: .4em;
+        }
+        &-text {
+            font-size: 1.6em;
+        }
+    }
+}

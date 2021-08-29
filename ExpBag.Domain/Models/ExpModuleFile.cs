@@ -13,5 +13,7 @@ namespace ExpBag.Domain.Models
         public string FilePath { get; set; }
         public string FileName { get; set; }
         public bool IsLoaded { get; set; }
+
+        public ExpModule Module { get; set; }
     }
 }

@@ -1,13 +1,16 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using ExpBag.Domain.Constants;
+using ExpBag.Loader.Constants;
 using ExpBag.Infrastructure.Environment;
 using ExpBag.Loader;
 using ExpBag.Loader.Abstractions;
 using ExpBag.UI.ViewModels;
 using ExpBag.UI.Views;
 using System;
+using ExpBag.UI.Startup;
+using ExpBag.Application.Interfaces;
+using ExpBag.UI.Abstractions;
 
 namespace ExpBag.UI
 {
@@ -15,9 +18,11 @@ namespace ExpBag.UI
     {
 
         private readonly IServiceProvider serviceProvider = ServiceProviderFactory.ServiceProvider;
+        private IAppViewService viewService;
 
         public override void Initialize()
         {
+            viewService = serviceProvider.GetService(typeof(IAppViewService)) as IAppViewService;
             AvaloniaXamlLoader.Load(this);
         }
 
@@ -25,9 +30,9 @@ namespace ExpBag.UI
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new ExpBag.UI.Views.MainWindow()
+                desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel()
+                    DataContext = serviceProvider.GetService(typeof(MainWindowViewModel))
                 };
             }
 

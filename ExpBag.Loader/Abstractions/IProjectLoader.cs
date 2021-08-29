@@ -1,5 +1,5 @@
 ﻿using ExpBag.Domain;
-using ExpBag.Domain.Constants;
+using ExpBag.Loader.Constants;
 using ExpBag.Loader.Abstractions;
 using System;
 using System.Collections.Generic;
