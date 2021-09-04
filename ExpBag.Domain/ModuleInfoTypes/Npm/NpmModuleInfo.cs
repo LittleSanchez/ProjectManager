@@ -15,8 +15,7 @@ namespace ExpBag.Domain.ModuleInfoTypes.Npm
     }
 
     public class NpmModuleInfo : ModuleInfo
-    {
-        public string ModuleName { get; set; }
+    {         
         public string Version { get; set; }
 
         public List<string> IncludedNpmModules { get; set; }

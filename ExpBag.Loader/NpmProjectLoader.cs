@@ -3,6 +3,8 @@ using ExpBag.Domain.DTO;
 using ExpBag.Domain.Models;
 using ExpBag.Loader.Abstractions;
 using ExpBag.Loader.Constants;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,11 +19,15 @@ namespace ExpBag.Loader
     {
         public List<string> AvailableExtentions { get; set; }
         public List<string> IgnoredNames { get; set; }
+        public string ExpbagProjectFolderName { get; set; }
+        public string ExpbagConfigFileName { get; set; }
 
         public NpmProjectLoader() 
         {
             AvailableExtentions = NpmLoaderConfig.Instance.AvailableExtentions;
             IgnoredNames = NpmLoaderConfig.Instance.IgnoredNames;
+            ExpbagConfigFileName = NpmLoaderConfig.Instance.ExpbagConfigFileName;
+            ExpbagProjectFolderName = NpmLoaderConfig.Instance.ExpbagProjectFolderName;
         }
 
 
@@ -38,7 +44,7 @@ namespace ExpBag.Loader
             return components;
         }
 
-        public ProjectInfo Load(ProjectInfo project)
+        public async Task<ProjectInfo> LoadAsync(ProjectInfo project)
         {
             var iterateComponents = ComponentsSelector(project.RootPath).ToList();
             Console.WriteLine(string.Join("\n", iterateComponents));
@@ -47,6 +53,19 @@ namespace ExpBag.Loader
                 FileName = Path.GetFileName(x),
                 FilePath = x
             }).ToList();
+
+            var packageJsonPath = Path.Combine(project.RootPath, "package.json");
+            var packageJsonData = JObject.Parse(await File.ReadAllTextAsync(packageJsonPath));
+            project.ProjectName = packageJsonData.Value<string>("name");
+
+            var expbagConfigPath = Path.Combine(project.RootPath, ExpbagProjectFolderName, ExpbagConfigFileName);
+            
+            if (!File.Exists(expbagConfigPath))
+            {
+                Directory.CreateDirectory(Path.Combine(project.RootPath, ExpbagProjectFolderName));
+                File.Create(expbagConfigPath);
+            }
+
             return project;
         }
 

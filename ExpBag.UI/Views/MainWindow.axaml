@@ -9,6 +9,6 @@
        Title="DiscWidget" ShowInTaskbar="True" CanResize="True"
         WindowStartupLocation="CenterScreen"
         Content="{Binding Content}">
-
+        
  
 </Window>

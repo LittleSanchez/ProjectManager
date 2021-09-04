@@ -10,6 +10,7 @@ namespace ExpBag.Application.Constans
     {
         Auth,
         EmptyProjectList,
-        DetailedProjectList
+        DetailedProjectList,
+        NewModule
     }
 }

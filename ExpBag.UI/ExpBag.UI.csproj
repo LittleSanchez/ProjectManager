@@ -18,12 +18,17 @@
     <PackageReference Include="Avalonia.Desktop" Version="0.10.6" />
     <PackageReference Include="Avalonia.Diagnostics" Version="0.10.6" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.6" />
+    <PackageReference Include="LiteDB" Version="5.0.11" />
+    <PackageReference Include="Material.Avalonia" Version="2.3.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExpBag.Infrastructure\ExpBag.Infrastructure.csproj" />
     <ProjectReference Include="..\ExpBag.Loader\ExpBag.Loader.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Views\NewModuleView.axaml.cs">
+      <DependentUpon>NewModuleView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\AuthView.axaml.cs">
       <DependentUpon>AuthView.axaml</DependentUpon>
     </Compile>

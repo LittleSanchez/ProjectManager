@@ -1,0 +1,38 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ExpBag.UI.Views.ModulesListView">
+  <DockPanel>
+    <DockPanel DockPanel.Dock="Top">
+      
+      
+      <Button Classes="Flat" DockPanel.Dock="Right">Add Module</Button>
+      <TextBlock Classes="Headline4" Text="Modules" DockPanel.Dock="Left"/>
+      
+    </DockPanel>
+    <DockPanel DockPanel.Dock="Bottom">
+      <Button Classes="Flat">Reload</Button>
+      <Button Command="NewModuleCommand" DockPanel.Dock="Right" Classes="Flat">New Module</Button>
+      <TextBlock></TextBlock>
+    </DockPanel>
+   
+    <ListBox Items="{Binding Modules}">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <DockPanel>
+            <Button DockPanel.Dock="Right" Background="DarkRed"  Margin="10 0">
+              <icons:MaterialIcon Kind="UploadOutline" />
+            </Button>
+            <Button DockPanel.Dock="Right" Background="Cyan" Margin="10 0 0 0">
+              <icons:MaterialIcon Kind="Pencil" />
+            </Button>
+            <TextBlock Text="{Binding ModuleName}"/>
+          </DockPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </DockPanel>
+</UserControl>

@@ -11,6 +11,9 @@ using System;
 using ExpBag.UI.Startup;
 using ExpBag.Application.Interfaces;
 using ExpBag.UI.Abstractions;
+using ExpBag.UI.Services;
+using Microsoft.Extensions.DependencyInjection;
+using ExpBag.UI.Store;
 
 namespace ExpBag.UI
 {
@@ -33,6 +36,10 @@ namespace ExpBag.UI
                 desktop.MainWindow = new MainWindow
                 {
                     DataContext = serviceProvider.GetService(typeof(MainWindowViewModel))
+                };
+                desktop.MainWindow.Closing += (sender, e) =>
+                {
+                    StoreLoader.SaveStore(serviceProvider.GetService<ApplicationStore>());
                 };
             }
 

@@ -89,7 +89,7 @@ namespace ExpBag.UI.ViewModels
         {
             var ofd = new OpenFileDialog();
             var project = this.ProjectSelector.OpenProject((await ofd.ShowAsync(window)).First());
-            var projectInfo = this.ProjectLoader.Load(project);
+            var projectInfo = await this.ProjectLoader.LoadAsync(project);
             if (projectInfo != null)
             {
                 SelectedProject = projectInfo;

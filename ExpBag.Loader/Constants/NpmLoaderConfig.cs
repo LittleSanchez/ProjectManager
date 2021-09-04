@@ -16,6 +16,8 @@ namespace ExpBag.Loader.Constants
 
         public List<string> AvailableExtentions { get; set; } = new List<string>();
         public List<string> IgnoredNames { get; set; } = new List<string>();
+        public string ExpbagProjectFolderName { get; set; }
+        public string ExpbagConfigFileName { get; set; }
 
 
         private static NpmLoaderConfig Load()

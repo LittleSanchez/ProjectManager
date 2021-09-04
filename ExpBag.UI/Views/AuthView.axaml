@@ -5,7 +5,7 @@
         mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450"
         x:Class="ExpBag.UI.Views.AuthView">
   <Grid>
-    <DockPanel MaxWidth="250" MaxHeight="400" Background="#dddddd">
+    <DockPanel MaxWidth="250" MaxHeight="400">
       <TextBlock DockPanel.Dock="Top" Margin="20 40" HorizontalAlignment="Center" FontSize="24">
         Sign in
       </TextBlock>

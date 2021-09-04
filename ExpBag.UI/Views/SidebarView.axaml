@@ -4,13 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="600"
              x:Class="ExpBag.UI.Views.SidebarView">
-  <ListBox DataContext="{Binding Projects}">
-    <ListBox.DataTemplates>
-      <DataTemplate>
-        <ListBoxItem>
-          <TextBlock Text="{Binding Name}"/>
-        </ListBoxItem>
-      </DataTemplate>
-    </ListBox.DataTemplates>
-  </ListBox>
+  <DockPanel>
+    <DockPanel DockPanel.Dock="Top">
+      <Button DockPanel.Dock="Top" Command="{Binding OpenProjectCommand}" CommandParameter="{Binding $parent[Window]}" HorizontalAlignment="Stretch" Margin="10" Content="Add project" HorizontalContentAlignment="Center"/>
+    </DockPanel>
+    <ListBox Items="{Binding Projects, Mode=OneWay}" SelectedItem="{Binding SelectedProject, Mode=TwoWay}">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+            <TextBlock Text="{Binding ProjectName}"/>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </DockPanel>
 </UserControl>

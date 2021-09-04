@@ -18,7 +18,7 @@ namespace ExpBag.Loader.Abstractions
 
 
         List<string> ComponentsSelector(string root);
-        ProjectInfo Load(ProjectInfo project);
+        Task<ProjectInfo> LoadAsync(ProjectInfo project);
 
 
     }

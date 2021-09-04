@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:vm="using:ExpBag.UI.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ExpBag.UI.Views.ProjectDetailsView">
+  <DockPanel>
+    <StackPanel DockPanel.Dock="Top" DataContext="{Binding SelectedProject}" Margin="20" >
+      <TextBlock Classes="Headline4" Text="{Binding ProjectName}"/>
+      <TextBlock Classes="Subtitle2" Text="{Binding RootPath}" Margin="0 10 0 0"/>
+    </StackPanel>
+    <Grid>
+      
+        <UserControl MaxHeight="200" Margin="20" Content="{Binding ModulesList}"/>
+    </Grid>
+  </DockPanel>
+</UserControl>

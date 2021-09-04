@@ -29,6 +29,10 @@ namespace ExpBag.UI.Startup
             services.AddSingleton<AuthViewModel>();
             services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<ProjectListViewModel>();
+            services.AddSingleton<SidebarViewModel>();
+            services.AddSingleton<ProjectDetailsViewModel>();
+            services.AddSingleton<ModulesListViewModel>();
+            services.AddSingleton<NewModuleViewModel>();
 
 
         }
@@ -44,7 +48,7 @@ namespace ExpBag.UI.Startup
             serviceCollection.AddSingleton<ITempController, TempContoller>();
             serviceCollection.AddSingleton<IAuthService, AuthService>();
 
-            serviceCollection.AddSingleton(new ApplicationStore());
+            serviceCollection.AddSingleton(StoreLoader.LoadStore());
 
             serviceCollection.AddSingleton<IAppAuthService, AppAuthService>();
 

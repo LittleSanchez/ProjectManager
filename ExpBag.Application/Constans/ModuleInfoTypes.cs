@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExpBag.Domain
+namespace ExpBag.Application.Constans
 {
-    public class ModuleInfo
+    public enum ModuleInfoTypes
     {
-        public string ModuleName { get; set; }
-        
+        Npm
     }
 }
