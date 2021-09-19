@@ -14,6 +14,7 @@ using ExpBag.UI.ViewModels;
 using ExpBag.UI.Store;
 using ExpBag.UI.Services;
 using ExpBag.UI.Abstractions;
+using System.Reflection;
 
 namespace ExpBag.UI.Startup
 {
@@ -25,14 +26,21 @@ namespace ExpBag.UI.Startup
         {
             services.AddSingleton<IAppViewService, AppViewService>();
 
-            services.AddSingleton<MainViewModel>();
-            services.AddSingleton<AuthViewModel>();
-            services.AddSingleton<MainWindowViewModel>();
-            services.AddSingleton<ProjectListViewModel>();
-            services.AddSingleton<SidebarViewModel>();
-            services.AddSingleton<ProjectDetailsViewModel>();
-            services.AddSingleton<ModulesListViewModel>();
-            services.AddSingleton<NewModuleViewModel>();
+            //services.AddSingleton<MainViewModel>();
+            //services.AddSingleton<AuthViewModel>();
+            //services.AddSingleton<MainWindowViewModel>();
+            //services.AddSingleton<ProjectListViewModel>();
+            //services.AddSingleton<SidebarViewModel>();
+            //services.AddSingleton<ProjectDetailsViewModel>();
+            //services.AddSingleton<ModulesListViewModel>();
+            //services.AddSingleton<NewModuleSelectViewModel>();
+
+            //Register ViewModels
+
+            foreach (var item in Assembly.GetExecutingAssembly().GetTypes().Select(x => x).Where(x => x.Namespace.Equals("ExpBag.UI.ViewModels")))
+            {
+                services.AddSingleton(item);
+            }
 
 
         }
@@ -47,10 +55,14 @@ namespace ExpBag.UI.Startup
 
             serviceCollection.AddSingleton<ITempController, TempContoller>();
             serviceCollection.AddSingleton<IAuthService, AuthService>();
+            serviceCollection.AddSingleton<IFetchService, FetchService>();
 
-            serviceCollection.AddSingleton(StoreLoader.LoadStore());
+            var applicationStore = StoreLoader.LoadStore();
+
+            serviceCollection.AddSingleton(applicationStore);
 
             serviceCollection.AddSingleton<IAppAuthService, AppAuthService>();
+            serviceCollection.AddSingleton<IModuleService, ModuleService>();
 
             ConfigureViews(serviceCollection);
 

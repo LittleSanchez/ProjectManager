@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace ExpBag.UI.Views
 {
-    public partial class NewModuleView : UserControl
+    public partial class AddModuleView : UserControl
     {
-        public NewModuleView()
+        public AddModuleView()
         {
             InitializeComponent();
         }

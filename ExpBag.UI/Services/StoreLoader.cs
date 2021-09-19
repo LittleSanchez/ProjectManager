@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using Avalonia;
+using ExpBag.Infrastructure.Environment;
 using ExpBag.UI.Store;
 using ExpBag.UI.Views;
 using LiteDB;
@@ -10,25 +11,31 @@ using Newtonsoft.Json;
 
 namespace ExpBag.UI.Services
 {
-    public class StoreLoader
+    public static class StoreLoader
     {
+        private static object locker = 43278534;
+
         private const string DbFileName = "data.mtf";
+        private static readonly string DbFilePath = Path.Combine(AppdataController.AppDataFolder, DbFileName);
         private const string StoreFileName = "store.data";
+        private static readonly string StoreFilePath = Path.Combine(AppdataController.AppDataFolder, StoreFileName);
         private const string StoreFileId = "0";
 
         public static ApplicationStore LoadStore()
         {
             try
             {
-
-                using (var db = new LiteDatabase(Path.Combine(Path.GetTempPath(), DbFileName)))
+                //var db = new LiteDatabase(DbFilePath);
+                //var storage = db.FileStorage;
+                //storage.Download(StoreFileId, StoreFilePath, true);
+                if (File.Exists(StoreFilePath))
                 {
-                    var storage = db.FileStorage;
-                    storage.Download(StoreFileId, StoreFileName, true);
-                    var store = JsonConvert.DeserializeObject<ApplicationStore>(File.ReadAllText(StoreFileName)) ?? new ApplicationStore();
-                    File.Delete(StoreFileName);
+                    var store = JsonConvert.DeserializeObject<ApplicationStore>(File.ReadAllText(StoreFilePath)) ?? new ApplicationStore();
+                    //File.Delete(StoreFilePath);
+                    //db.Dispose();
                     return store;
                 }
+                throw new FileNotFoundException();
             }
             catch (Exception ex)
             {
@@ -39,13 +46,19 @@ namespace ExpBag.UI.Services
 
         public static void SaveStore(ApplicationStore store)
         {
-            using (var db = new LiteDatabase(Path.Combine(Path.GetTempPath(), DbFileName)))
+            if (!Directory.Exists(Path.GetDirectoryName(DbFilePath)))
             {
-                var storage = db.FileStorage;
-                File.WriteAllText(StoreFileName, JsonConvert.SerializeObject(store));
-                storage.Upload(StoreFileId, StoreFileName);
-                File.Delete(StoreFileName);
+                Directory.CreateDirectory(Path.GetDirectoryName(DbFilePath));
             }
+            //var db = new LiteDatabase(DbFilePath);
+            //var storage = db.FileStorage;
+            if (File.Exists(StoreFilePath))
+            {
+                File.Delete(StoreFilePath);
+            }
+            File.WriteAllText(StoreFilePath, JsonConvert.SerializeObject(store));
+            //storage.Upload(StoreFileId, StoreFilePath);
+            //db.Dispose();
         }
     }
 }

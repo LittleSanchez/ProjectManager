@@ -46,6 +46,13 @@ namespace ExpBag.EFData
                     .HasForeignKey(ur => ur.UserId)
                     .IsRequired();
             });
+            builder.Entity<ExpModule>(expModule =>
+            {
+                expModule.HasKey(em => new { em.Id });
+
+                expModule.HasMany(em => em.IncludedFiles)
+                    .WithOne(emf => emf.Module);
+            });
         }
     }
 }

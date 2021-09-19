@@ -4,6 +4,7 @@ using ExpBag.Domain.Models;
 using ExpBag.Domain.ModuleInfoTypes.Npm;
 using ExpBag.Infrastructure.Extentions;
 using ExpBag.Loader.Abstractions;
+using ExpBag.Loader.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -16,14 +17,7 @@ using System.Threading.Tasks;
 
 namespace ExpBag.Loader
 {
-    public class NpmModuleCompilerOptions
-    {
-        public string TargetFile { get; set; } = null;
-        public string DestinationFolder { get; set; } = null;
-        public string ModuleVersion { get; set; } = null;
-        public string ModuleName { get; set; } = null;
 
-    }
 
 
     public class NpmModuleCompiler : IProjectModuleCompiler
@@ -47,7 +41,7 @@ namespace ExpBag.Loader
                 throw new InvalidCastException("Can't cast \'object\' to \'NpmModuleCompilerOptions\'");
             }
             var compilerOptions = options as NpmModuleCompilerOptions;
-            var moduleName = Path.GetFileNameWithoutExtension(compilerOptions.TargetFile);
+            var moduleName = compilerOptions.ModuleName;
 
             //string moduleDirectory = tempController.CreateTempDirectory(moduleName);
             string moduleDirectory = compilerOptions.DestinationFolder;
@@ -60,11 +54,12 @@ namespace ExpBag.Loader
 
             //Creating package module file
             string packagePath = await CreatePackageFileAsync(moduleDirectory, JObject.Parse("{" +
-                $"\"name\": \"{compilerOptions.ModuleName}\"," + 
-                $"\"version\": \"{compilerOptions.ModuleVersion}\"," + 
-                $"\"version\": \"{compilerOptions.ModuleVersion}\"," + 
+                $"\"name\": \"{compilerOptions.ModuleName}\"," +
+                $"\"version\": \"{compilerOptions.ModuleVersion}\"," +
+                $"\"version\": \"{compilerOptions.ModuleVersion}\"," +
                 $"\"type\": \"module\"" + //  <<<< IMPORTANT!!!! >>>>> 
                 "}"));
+            packagePath = Path.GetFileName(packagePath);
             files.Add(packagePath);
 
 
@@ -87,16 +82,23 @@ namespace ExpBag.Loader
             var fileData = File.ReadAllText(filePath);
 
             var matches = Regex.Matches(fileData, SUPER_FILE_REGEX, RegexOptions.Multiline, TimeSpan.FromSeconds(10));
-            foreach (Match match in matches)
+            try
             {
-                var includedFileName = match.Groups[match.Groups.Count - 1].Value;
-                if (Path.GetExtension(includedFileName).Length <= 0)
+                foreach (Match match in matches)
                 {
-                    var tmpFileName = Directory.GetFiles(Path.GetDirectoryName(currentDirectory.CombineWithJSPath(includedFileName))).Where(x => x.Contains(Path.GetFileName(includedFileName))).First();
-                    includedFileName = tmpFileName;
+                    var includedFileName = match.Groups[match.Groups.Count - 1].Value;
+                    if (Path.GetExtension(includedFileName).Length <= 0)
+                    {
+                        var tmpFileName = Directory.GetFiles(Path.GetDirectoryName(currentDirectory.CombineWithJSPath(includedFileName))).Where(x => x.Contains(Path.GetFileName(includedFileName))).First();
+                        includedFileName = tmpFileName;
+                    }
+                    files.Add(includedFileName);
+                    files.AddRange(GetIncludedFiles(includedFileName));
                 }
-                files.Add(includedFileName);
-                files.AddRange(GetIncludedFiles(includedFileName));
+            }
+            catch (NullReferenceException nex)
+            {
+                return new List<string>();
             }
             return files;
         }
@@ -216,7 +218,7 @@ namespace ExpBag.Loader
             processInput.WriteLine("npm init --yes & exit");
             process.WaitForExit();
             var packageData = JObject.Parse(File.ReadAllText(packageFilePath));
-            foreach(var item in options)
+            foreach (var item in options)
             {
                 packageData[item.Key] = item.Value;
             }

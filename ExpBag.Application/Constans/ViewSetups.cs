@@ -11,6 +11,8 @@ namespace ExpBag.Application.Constans
         Auth,
         EmptyProjectList,
         DetailedProjectList,
-        NewModule
+        NewModuleSelect,
+        NewModuleOptions,
+        AddModule
     }
 }

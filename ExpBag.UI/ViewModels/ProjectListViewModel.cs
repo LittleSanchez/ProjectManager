@@ -17,6 +17,7 @@ using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using ExpBag.Loader.Models;
 
 namespace ExpBag.UI.ViewModels
 {
@@ -89,7 +90,7 @@ namespace ExpBag.UI.ViewModels
         {
             var ofd = new OpenFileDialog();
             var project = this.ProjectSelector.OpenProject((await ofd.ShowAsync(window)).First());
-            var projectInfo = await this.ProjectLoader.LoadAsync(project);
+            var projectInfo = await this.ProjectLoader.LoadProjectAsync(project);
             if (projectInfo != null)
             {
                 SelectedProject = projectInfo;

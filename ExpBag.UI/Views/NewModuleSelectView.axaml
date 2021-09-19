@@ -1,0 +1,28 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450"
+             x:Class="ExpBag.UI.Views.NewModuleSelectView">
+  <DockPanel>
+    
+    <DockPanel DockPanel.Dock="Bottom">
+      <Button DockPanel.Dock="Right" Command="{Binding SelectCommand}" MaxWidth="150" Margin="20">Select</Button>
+      <TextBlock/>
+    </DockPanel>
+    <DockPanel DockPanel.Dock="Top" Margin="20">
+      <Button Command="{Binding CancelCommand}" DockPanel.Dock="Left" Content="Cancel" Classes="Flat"/>
+      <TextBlock></TextBlock>
+    </DockPanel>
+    <ListBox Items="{Binding Files, Mode=TwoWay}" SelectedItem="{Binding SelectedFile}" Margin="20 20 20 0">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <StackPanel>
+            <TextBlock Classes="Headline5" Text="{Binding FileName}"/>
+            <TextBlock Classes="Subtitle2" Text="{Binding FilePath}"/>
+          </StackPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </DockPanel>
+</UserControl>

@@ -9,26 +9,23 @@
     <DockPanel DockPanel.Dock="Top">
       
       
-      <Button Classes="Flat" DockPanel.Dock="Right">Add Module</Button>
+      <Button Classes="Flat" Command="{Binding AddModuleCommand}" DockPanel.Dock="Right">Add Module</Button>
       <TextBlock Classes="Headline4" Text="Modules" DockPanel.Dock="Left"/>
       
     </DockPanel>
     <DockPanel DockPanel.Dock="Bottom">
-      <Button Classes="Flat">Reload</Button>
-      <Button Command="NewModuleCommand" DockPanel.Dock="Right" Classes="Flat">New Module</Button>
+      <Button Classes="Flat" Command="{Binding ReloadModulesCommand}">Reload</Button>
+      <Button Command="{Binding NewModuleCommand}" DockPanel.Dock="Right" Classes="Flat">New Module</Button>
       <TextBlock></TextBlock>
     </DockPanel>
    
-    <ListBox Items="{Binding Modules}">
+    <ListBox Items="{Binding Project.ExpModules}">
       <ListBox.ItemTemplate>
         <DataTemplate>
           <DockPanel>
-            <Button DockPanel.Dock="Right" Background="DarkRed"  Margin="10 0">
-              <icons:MaterialIcon Kind="UploadOutline" />
-            </Button>
-            <Button DockPanel.Dock="Right" Background="Cyan" Margin="10 0 0 0">
+            <!--<Button DockPanel.Dock="Right" Background="Cyan" Margin="10 0 0 0">
               <icons:MaterialIcon Kind="Pencil" />
-            </Button>
+            </Button>-->
             <TextBlock Text="{Binding ModuleName}"/>
           </DockPanel>
         </DataTemplate>

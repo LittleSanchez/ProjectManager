@@ -10,6 +10,9 @@ using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using ExpBag.UI.Abstractions;
+using ExpBag.Domain.DTO;
+using ExpBag.Loader.Abstractions;
 
 namespace ExpBag.UI.ViewModels
 {
@@ -17,36 +20,59 @@ namespace ExpBag.UI.ViewModels
     {
         private readonly IServiceProvider ServiceProvider = ServiceProviderFactory.ServiceProvider;
         private readonly ApplicationStore Store;
-        
-        public ObservableCollection<ModuleInfo> Modules { get; set; }
+        private readonly IAppViewService ViewService;
+        private readonly IProjectLoader ProjectLoader;
 
+        //public ObservableCollection<ExpModuleDTO> Modules { get; set; } = new ObservableCollection<ExpModuleDTO>();
+        private ProjectInfo _project;
 
-        public ReactiveCommand<Unit, Unit> NewModuleCommand;
+        public ProjectInfo Project
+        {
+            get { return _project; }
+            set { this.RaiseAndSetIfChanged(ref _project, value); }
+        }
+
+        public ReactiveCommand<Unit, Unit> NewModuleCommand { get; set; }
+        public ReactiveCommand<Unit, Unit> ReloadModulesCommand { get; set; }
+        public ReactiveCommand<Unit, Unit> AddModuleCommand { get; set; }
+        public ReactiveCommand<ExpModuleStored, Unit> ExcludeModuleCommand { get; set; }
 
         public ModulesListViewModel()
         {
             Store = ServiceProvider.GetService<ApplicationStore>();
 
-            Modules = new ObservableCollection<ModuleInfo>
-            {
-                new ModuleInfo
-                {
-                    ModuleName = "card-view"
-                },
-                new ModuleInfo
-                {
-                    ModuleName = "navbar-view"
-                },
-                
-            };
-
+            ViewService = ServiceProvider.GetService<IAppViewService>();
+            ProjectLoader = ServiceProvider.GetService<IProjectLoader>();
 
             NewModuleCommand = ReactiveCommand.CreateFromTask(NewModuleCommandClick);
+            ReloadModulesCommand = ReactiveCommand.CreateFromTask(ReloadModulesCommandClick);
+            AddModuleCommand = ReactiveCommand.CreateFromTask(AddModuleCommandClick);
+            ExcludeModuleCommand = ReactiveCommand.CreateFromTask<ExpModuleStored>(ExcludeModuleCommandTask);
+
         }
 
         public async Task NewModuleCommandClick()
         {
+            ViewService.Show(Application.Constans.ViewSetups.NewModuleSelect);
+        }
 
+        public async Task ReloadModulesCommandClick()
+        {
+            ProjectLoader.SaveStoredModules(Project);
+            await ProjectLoader.LoadModuleAsync(Project);
+        }
+
+        public async Task AddModuleCommandClick()
+        {
+            Store.ViewSetup = Application.Constans.ViewSetups.AddModule;
+        }
+
+        public async Task ExcludeModuleCommandTask(ExpModuleStored storedModule)
+        {
+            if (storedModule != null)
+            {
+                Project.ExpModules.Remove(storedModule);
+            }
         }
     }
 }

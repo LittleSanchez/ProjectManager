@@ -26,8 +26,8 @@
     <ProjectReference Include="..\ExpBag.Loader\ExpBag.Loader.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Views\NewModuleView.axaml.cs">
-      <DependentUpon>NewModuleView.axaml</DependentUpon>
+    <Compile Update="Views\NewModuleSelectView.axaml.cs">
+      <DependentUpon>NewModuleSelectView.axaml</DependentUpon>
     </Compile>
     <Compile Update="Views\AuthView.axaml.cs">
       <DependentUpon>AuthView.axaml</DependentUpon>

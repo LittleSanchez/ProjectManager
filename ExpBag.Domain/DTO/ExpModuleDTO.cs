@@ -13,7 +13,7 @@ namespace ExpBag.Domain.DTO
         public string ModuleInfo { get; set; }
         public string ModuleInfoType { get; set; }
         public List<ExpModuleFileDTO> IncludedFiles { get; set; }
-        public string UserName { get; set; }
+        //public string UserName { get; set; }
 
 
     }

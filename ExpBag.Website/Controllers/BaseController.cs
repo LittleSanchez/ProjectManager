@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using ExpBag.EFData;
 using AutoMapper;
+using Microsoft.Extensions.Configuration;
 
 namespace ExpBag.Website.Controllers
 {
@@ -18,6 +19,7 @@ namespace ExpBag.Website.Controllers
         private IMediator _mediator;
         private DataContext _context;
         private IMapper _mapper;
+        private IConfiguration _configuration;
 
         protected IMediator Mediator => _mediator ??
             (_mediator = HttpContext.RequestServices.GetService<IMediator>());
@@ -26,8 +28,9 @@ namespace ExpBag.Website.Controllers
             (_context = HttpContext.RequestServices.GetService<DataContext>());
 
         protected IMapper Mapper => _mapper ??
-            (_mapper = HttpContext.RequestServices.GetService<Mapper>());
+            (_mapper = HttpContext.RequestServices.GetService<IMapper>());
+        protected IConfiguration Configuration => _configuration ??
+            (_configuration = HttpContext.RequestServices.GetService<IConfiguration>());
 
-        
     }
 }

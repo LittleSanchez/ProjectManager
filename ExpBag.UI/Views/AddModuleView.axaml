@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="450"
+             x:Class="ExpBag.UI.Views.AddModuleView">
+  <DockPanel>
+    <DockPanel DockPanel.Dock="Bottom">
+      <Button DockPanel.Dock="Right" Command="{Binding AddModuleCommand}" Classes="Flat" Margin="20 10">Add</Button>
+      <TextBlock/>
+    </DockPanel>
+    <DockPanel DockPanel.Dock="Top" Margin="20">
+      <Button Command="{Binding CancelCommand}" DockPanel.Dock="Left" Content="Cancel" Classes="Flat"/>
+      <TextBlock></TextBlock>
+    </DockPanel>
+    <ListBox Items="{Binding Modules}" SelectedItem="{Binding SelectedModule}" Margin="20">
+      <ListBox.DataTemplates>
+        <DataTemplate>
+          <TextBlock Classes="Headline5" Text="{Binding ModuleName}"/>
+        </DataTemplate>
+      </ListBox.DataTemplates>
+    </ListBox>
+  </DockPanel>
+</UserControl>

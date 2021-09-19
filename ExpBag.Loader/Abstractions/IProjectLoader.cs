@@ -18,8 +18,10 @@ namespace ExpBag.Loader.Abstractions
 
 
         List<string> ComponentsSelector(string root);
-        Task<ProjectInfo> LoadAsync(ProjectInfo project);
+        Task<ProjectInfo> LoadProjectAsync(ProjectInfo project);
 
-
+        Task LoadModuleAsync(ProjectInfo projectInfo);
+        Task<ProjectInfo> GetStoredModules(ProjectInfo projectInfo);
+        Task<ProjectInfo> SaveStoredModules(ProjectInfo project);
     }
 }

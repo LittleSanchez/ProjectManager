@@ -81,7 +81,15 @@ namespace ExpBag.Website
             });
 
             //Automapper `
-            services.AddAutoMapper(MapperProfile.Create);
+            //services.AddAutoMapper(MapperProfile.Create);
+            //services.AddAutoMapper(typeof(Startup));
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MapperProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
 
 
@@ -126,27 +134,27 @@ namespace ExpBag.Website
                 };
             });
 
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Food.WebApi", Version = "v1" });
-            //    c.AddSecurityDefinition("Bearer",
-            //        new OpenApiSecurityScheme
-            //        {
-            //            Description = "JWT Authorization header using the Bearer scheme.",
-            //            Type = SecuritySchemeType.Http,
-            //            Scheme = "bearer"
-            //        });
-            //    c.AddSecurityRequirement(new OpenApiSecurityRequirement{
-            //        {
-            //            new OpenApiSecurityScheme{
-            //                Reference = new OpenApiReference{
-            //                    Id = "Bearer",
-            //                    Type = ReferenceType.SecurityScheme
-            //                }
-            //            },new List<string>()
-            //        }
-            //    });
-            //});
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ExpBag.WebsiteAPI", Version = "v1" });
+                c.AddSecurityDefinition("Bearer",
+                    new OpenApiSecurityScheme
+                    {
+                        Description = "JWT Authorization header using the Bearer scheme.",
+                        Type = SecuritySchemeType.Http,
+                        Scheme = "bearer"
+                    });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement{
+                    {
+                        new OpenApiSecurityScheme{
+                            Reference = new OpenApiReference{
+                                Id = "Bearer",
+                                Type = ReferenceType.SecurityScheme
+                            }
+                        },new List<string>()
+                    }
+                });
+            });
 
             services.AddScoped<IJwtGenerator, JwtGenerator>();
         }
@@ -184,7 +192,12 @@ namespace ExpBag.Website
 
             app.UseSpaStaticFiles();
 
+
             app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
@@ -193,15 +206,20 @@ namespace ExpBag.Website
                     pattern: "{controller}/{action=Index}/{id?}");
             });
 
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment())
-                {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
-                }
-            });
+
+            //app.UseSpa(spa =>
+            //{
+            //    spa.Options.SourcePath = "ClientApp";
+
+            //    if (env.IsDevelopment())
+            //    {
+            //        spa.UseReactDevelopmentServer(npmScript: "start");
+            //    }
+            //});
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi v1"));
         }
     }
 }

@@ -13,15 +13,17 @@ using System.Reactive;
 using ExpBag.Loader.Abstractions;
 using System.Collections.ObjectModel;
 using ExpBag.Application.Constans;
+using ExpBag.UI.Abstractions;
 
 namespace ExpBag.UI.ViewModels
 {
     public class SidebarViewModel : ViewModelBase
     {
-        private IServiceProvider ServiceProvider {get;} = ServiceProviderFactory.ServiceProvider;
+        private IServiceProvider ServiceProvider { get; } = ServiceProviderFactory.ServiceProvider;
         public IProjectSelector? ProjectSelector { get; set; }
         public IProjectLoader? ProjectLoader { get; set; }
-        private ApplicationStore? Store{get;}
+        public IModuleService? ModuleService { get; set; }
+        private ApplicationStore? Store { get; }
 
         //Binding properties
 
@@ -37,7 +39,8 @@ namespace ExpBag.UI.ViewModels
         public ProjectInfo? SelectedProject
         {
             get { return _selectedProject; }
-            set { 
+            set
+            {
                 this.RaiseAndSetIfChanged(ref _selectedProject, value);
                 if (value == null)
                     Store.ViewSetup = ViewSetups.EmptyProjectList;
@@ -47,27 +50,28 @@ namespace ExpBag.UI.ViewModels
         }
 
         //Reactive commands
-        public ReactiveCommand<Window, Unit> OpenProjectCommand{ get; set; }
+        public ReactiveCommand<Window, Unit> OpenProjectCommand { get; set; }
 
         public SidebarViewModel()
         {
             Store = ServiceProvider.GetService<ApplicationStore>();
             ProjectSelector = ServiceProvider.GetService<IProjectSelector>();
             ProjectLoader = ServiceProvider.GetService<IProjectLoader>();
-
+            ModuleService = ServiceProvider.GetService<IModuleService>();
 
             Store.ProjectsUpdated += UpdateProjects;
             UpdateProjects(Store?.Projects);
 
             OpenProjectCommand = ReactiveCommand.CreateFromTask<Window>(OpenProject);
         }
-        
 
-        private void UpdateProjects(List<ProjectInfo>? projects) {
+
+        private void UpdateProjects(List<ProjectInfo>? projects)
+        {
             if (Projects == null)
                 Projects = new ObservableCollection<ProjectInfo>();
             Projects!.Clear();
-            foreach(var item in projects)
+            foreach (var item in projects)
             {
                 Projects.Add(item);
             }
@@ -77,7 +81,7 @@ namespace ExpBag.UI.ViewModels
         {
             var ofd = new OpenFileDialog();
             var project = this.ProjectSelector.OpenProject((await ofd.ShowAsync(window)).First());
-            var projectInfo = await this.ProjectLoader.LoadAsync(project);
+            var projectInfo = await this.ProjectLoader.LoadProjectAsync(project);
             if (projectInfo != null)
             {
                 Projects.Add(projectInfo);
